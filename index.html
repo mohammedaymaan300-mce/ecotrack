@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EcoTrack - Carbon Emission Tracker</title>
+  <title>EcoTrack - Intelligent Carbon Emission Management</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -13,6 +13,34 @@
       font-family: 'Inter', sans-serif;
       background-color: #f6fbf8;
       color: #111827;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 9999px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #16a34a;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #16a34a;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
     }
   </style>
 </head>
@@ -27,203 +55,579 @@
         </div>
         <span class="text-xl font-bold tracking-tight text-gray-900">EcoTrack</span>
       </a>
-      <a href="#data-section" class="bg-green-600 hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition shadow-sm">
-        Add Data
+      <a href="#data-entry" class="bg-green-600 hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition shadow-sm">
+        Get Started
       </a>
     </div>
   </header>
 
   <!-- Hero Section -->
-  <section class="pt-12 pb-10 px-4 sm:px-6 text-center max-w-4xl mx-auto">
+  <section class="pt-14 pb-12 px-4 sm:px-6 text-center max-w-4xl mx-auto">
     <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 leading-tight">
-      Carbon <span class="text-green-600">Emission</span> Tracker
+      Intelligent <span class="text-green-600">Carbon</span><br>
+      <span class="text-green-600">Emission</span><br class="sm:hidden"> Management
     </h1>
-    <p class="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-      Enter your data manually or upload a CSV file to view clean carbon emission charts for your entries.
+    <p class="mt-5 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+      AI-powered platform to track, forecast, and reduce your carbon footprint with data-driven insights and actionable recommendations.
     </p>
+    <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto">
+      <a href="#data-entry" class="w-full sm:w-auto flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+        <i data-lucide="plus-square" class="w-4 h-4"></i> Enter Data
+      </a>
+      <a href="#analytics" class="w-full sm:w-auto flex-1 bg-white hover:bg-gray-50 text-gray-800 font-semibold py-3 px-6 rounded-xl border border-gray-200 shadow-sm transition flex items-center justify-center">
+        View Analytics
+      </a>
+    </div>
   </section>
 
-  <!-- Data Input Section: Manual Entry + CSV Upload -->
-  <section id="data-section" class="max-w-4xl mx-auto px-4 sm:px-6 pb-12">
-    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-green-100 shadow-sm">
-
-      <!-- Mode Switcher Tabs -->
-      <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-gray-100">
-        <div>
-          <h2 class="text-xl font-bold text-gray-900">Add Emission Data</h2>
-          <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Choose manual entry (any one or more fields) or upload a CSV file</p>
+  <!-- 3 Feature Cards -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pb-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm text-center">
+        <div class="w-11 h-11 mx-auto rounded-xl bg-green-50 text-green-600 flex items-center justify-center mb-4">
+          <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
         </div>
-        <div class="inline-flex rounded-xl bg-gray-100 p-1">
-          <button type="button" id="tabManual"
-            class="px-4 py-2 rounded-lg text-sm font-semibold bg-white text-green-700 shadow-sm transition">
-            Manual Entry
+        <h3 class="font-bold text-gray-900 text-base">Manual or CSV Entry</h3>
+        <p class="text-sm text-gray-500 mt-1.5 leading-relaxed">Enter monthly metrics directly or upload your CSV file anytime</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm text-center">
+        <div class="w-11 h-11 mx-auto rounded-xl bg-green-50 text-green-600 flex items-center justify-center mb-4">
+          <i data-lucide="trending-down" class="w-5 h-5"></i>
+        </div>
+        <h3 class="font-bold text-gray-900 text-base">AI Forecasting</h3>
+        <p class="text-sm text-gray-500 mt-1.5 leading-relaxed">Predict future emissions with machine learning models</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm text-center">
+        <div class="w-11 h-11 mx-auto rounded-xl bg-green-50 text-green-600 flex items-center justify-center mb-4">
+          <i data-lucide="lightbulb" class="w-5 h-5"></i>
+        </div>
+        <h3 class="font-bold text-gray-900 text-base">Smart Recommendations</h3>
+        <p class="text-sm text-gray-500 mt-1.5 leading-relaxed">Get personalized actions to reduce your carbon footprint</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dual Data Entry Section (Manual Entry + CSV Upload) -->
+  <section id="data-entry" class="max-w-3xl mx-auto px-4 sm:px-6 pb-16">
+    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-green-100 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="clipboard-edit" class="w-5 h-5 text-green-600"></i>
+            <h2 class="text-xl font-bold text-gray-900">Add Your Emission Data</h2>
+          </div>
+          <p class="text-sm text-gray-500 mt-1">
+            Saved permanently on your device — enter manually or upload a CSV file
+          </p>
+        </div>
+
+        <!-- Mode Switch Tabs -->
+        <div class="inline-flex rounded-xl bg-gray-100 p-1 self-start sm:self-auto">
+          <button type="button" id="tabManualBtn"
+            class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-green-700 shadow-sm transition flex items-center gap-1.5">
+            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> Manual Entry
           </button>
-          <button type="button" id="tabCsv"
-            class="px-4 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 transition">
-            Upload CSV
+          <button type="button" id="tabCsvBtn"
+            class="px-3.5 py-2 rounded-lg text-xs font-semibold text-gray-600 hover:text-gray-900 transition flex items-center gap-1.5">
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i> Upload CSV
           </button>
         </div>
       </div>
 
-      <!-- Manual Form Panel -->
-      <form id="manualForm" class="mt-6 space-y-5">
-        <div>
-          <label for="entryDate" class="block text-sm font-semibold text-gray-700 mb-1.5">
-            Date / Month <span class="text-red-500">*</span>
-          </label>
-          <input type="month" id="entryDate" required
-            class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- TAB 1: Manual Entry Form -->
+      <div id="manualPane">
+        <form id="manualEntryForm" class="mt-6 space-y-5">
           <div>
-            <label for="electricityInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
-              Electricity (kWh)
+            <label for="entryDate" class="block text-sm font-semibold text-gray-700 mb-1.5">
+              Month &amp; Year <span class="text-red-500">*</span>
             </label>
-            <input type="number" id="electricityInput" step="any" min="0" placeholder="Enter kWh (optional if other filled)"
+            <input type="month" id="entryDate" value="2026-11" required
               class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
           </div>
 
-          <div>
-            <label for="fuelInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
-              Fuel Used in Vehicle (Liters)
-            </label>
-            <input type="number" id="fuelInput" step="any" min="0" placeholder="Enter vehicle fuel in liters"
-              class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="electricityInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
+                Electricity (kWh)
+              </label>
+              <input type="number" id="electricityInput" step="any" min="0" placeholder="e.g. 12000"
+                class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+            </div>
+            <div>
+              <label for="fuelInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
+                Fuel Used in Vehicle (Liters)
+              </label>
+              <input type="number" id="fuelInput" step="any" min="0" placeholder="e.g. 350"
+                class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+            </div>
+            <div>
+              <label for="gasInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
+                Natural Gas (m³)
+              </label>
+              <input type="number" id="gasInput" step="any" min="0" placeholder="e.g. 500"
+                class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+            </div>
+            <div>
+              <label for="fleetInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
+                Fleet Distance (km)
+              </label>
+              <input type="number" id="fleetInput" step="any" min="0" placeholder="e.g. 2400"
+                class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+            </div>
           </div>
 
-          <div>
-            <label for="gasInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
-              Natural Gas (m³)
-            </label>
-            <input type="number" id="gasInput" step="any" min="0" placeholder="Enter gas in m³"
-              class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+          <div class="flex flex-col sm:flex-row gap-3 pt-1">
+            <button type="submit"
+              class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-5 rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i> Save &amp; Update Dashboard
+            </button>
+            <button type="button" id="clearAllDataBtn"
+              class="bg-red-50 hover:bg-red-100 text-red-700 font-medium py-3 px-4 rounded-xl text-sm transition flex items-center justify-center gap-1.5">
+              <i data-lucide="trash-2" class="w-4 h-4"></i> Clear All My Data
+            </button>
           </div>
+        </form>
+      </div>
 
-          <div>
-            <label for="fleetInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
-              Fleet Distance (km)
-            </label>
-            <input type="number" id="fleetInput" step="any" min="0" placeholder="Enter distance in km"
-              class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
-          </div>
-        </div>
-
-        <p class="text-xs text-gray-500">
-          Tip: You can fill in <strong>any one</strong> field above or multiple fields together. Blank fields are treated as 0.
-        </p>
-
-        <div class="flex flex-wrap gap-3 pt-1">
-          <button type="submit"
-            class="flex-1 min-w-[200px] bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-5 rounded-xl shadow-sm transition flex items-center justify-center gap-2">
-            <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Data &amp; Update Graph
-          </button>
-          <button type="button" id="clearAllBtn"
-            class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-xl text-sm transition">
-            Clear All Data
-          </button>
-        </div>
-      </form>
-
-      <!-- CSV Upload Panel -->
-      <div id="csvPanel" class="hidden mt-6 space-y-5">
-        <label for="csvFileInput"
-          class="border-2 border-dashed border-green-200 hover:border-green-500 bg-green-50/30 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition">
-          <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center mb-3">
+      <!-- TAB 2: CSV Upload Pane -->
+      <div id="csvPane" class="hidden mt-6 space-y-5">
+        <div id="csvDropzone"
+          class="border-2 border-dashed border-green-300 hover:border-green-500 bg-green-50/40 rounded-2xl p-8 text-center cursor-pointer transition">
+          <input type="file" id="csvFileInput" accept=".csv,text/csv" class="hidden">
+          <div class="w-12 h-12 mx-auto rounded-full bg-green-100 text-green-600 flex items-center justify-center mb-3">
             <i data-lucide="upload-cloud" class="w-6 h-6"></i>
           </div>
-          <span class="text-sm font-semibold text-gray-900">Click to select a CSV file</span>
-          <span class="text-xs text-gray-500 mt-1">Supported columns: <code class="font-mono">date</code>, <code class="font-mono">electricity_kwh</code>, <code class="font-mono">fuel_used_liters</code> (or <code class="font-mono">diesel_liters</code>), <code class="font-mono">gas_m3</code>, <code class="font-mono">fleet_km</code></span>
-          <input type="file" id="csvFileInput" accept=".csv,text/csv" class="hidden">
-        </label>
+          <p class="text-sm font-bold text-gray-900">Drop your CSV file here, or click to browse</p>
+          <p class="text-xs text-gray-500 mt-1">Supports monthly records with date and any activity columns</p>
+          <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <span class="bg-green-600 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-sm">Choose CSV File</span>
+            <button type="button" id="downloadSampleCsvBtn"
+              class="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 text-xs font-semibold px-3.5 py-2 rounded-lg transition">
+              Download Sample CSV
+            </button>
+          </div>
+        </div>
 
-        <div class="flex flex-wrap items-center justify-between gap-3 bg-gray-50 rounded-xl p-4 border border-gray-200/80">
-          <span id="csvFileName" class="text-xs text-gray-600 font-medium">No CSV file selected yet</span>
-          <button type="button" id="downloadSampleCsv"
-            class="text-xs font-semibold text-green-700 hover:text-green-800 underline">
-            Download Sample CSV Template
-          </button>
+        <div class="bg-gray-50 border border-gray-200/80 rounded-xl p-4 flex items-start gap-3">
+          <i data-lucide="file-text" class="w-4 h-4 text-gray-500 mt-0.5 shrink-0"></i>
+          <div class="text-xs text-gray-600 leading-relaxed">
+            <span class="font-semibold text-gray-800 block mb-0.5">CSV Column Format:</span>
+            Include <code class="text-green-700 font-mono">date</code> (YYYY-MM or YYYY-MM-DD) along with any of: <code class="text-green-700 font-mono">electricity_kwh</code>, <code class="text-green-700 font-mono">fuel_liters</code>, <code class="text-green-700 font-mono">gas_m3</code>, <code class="text-green-700 font-mono">fleet_km</code>. Uploaded rows are merged and permanently stored on your device.
+          </div>
         </div>
       </div>
 
-      <!-- Status Message -->
-      <div id="statusBanner" class="hidden mt-4 text-sm font-medium px-4 py-2.5 rounded-xl"></div>
+      <!-- Feedback Banner -->
+      <div id="formFeedback" class="hidden mt-5 text-sm font-medium px-4 py-2.5 rounded-xl"></div>
+
+      <!-- Info Box -->
+      <div class="mt-6 bg-gray-50 border border-gray-200/80 rounded-xl p-4 flex items-start gap-3">
+        <i data-lucide="shield-check" class="w-4 h-4 text-green-600 mt-0.5 shrink-0"></i>
+        <p class="text-xs text-gray-600 leading-relaxed">
+          <span class="font-semibold text-gray-800">Private &amp; Permanent on Your Device:</span> Your entries stay saved locally in this browser even after refreshing or closing the page. Enter at least one value among Electricity, Fuel Used in Vehicle, Natural Gas, or Fleet Distance.
+        </p>
+      </div>
+
+      <!-- Saved Personal Records List (Shown once user adds data) -->
+      <div id="savedRecordsContainer" class="hidden mt-6 pt-6 border-t border-gray-100">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-gray-900">Your Saved Monthly Records (<span id="recordCountLabel">0</span>)</h3>
+          <span class="text-[11px] text-green-700 bg-green-50 px-2.5 py-0.5 rounded-full font-medium">Saved on this device</span>
+        </div>
+        <div class="overflow-x-auto rounded-xl border border-gray-200">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-gray-50 text-gray-600 font-semibold border-b border-gray-200">
+              <tr>
+                <th class="py-2.5 px-3">Month</th>
+                <th class="py-2.5 px-3">Electricity</th>
+                <th class="py-2.5 px-3">Vehicle Fuel</th>
+                <th class="py-2.5 px-3">Gas</th>
+                <th class="py-2.5 px-3">Fleet</th>
+                <th class="py-2.5 px-3">Total (tCO₂e)</th>
+                <th class="py-2.5 px-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="savedRecordsBody" class="divide-y divide-gray-100 text-gray-700"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Summary Cards & Clean Graphs -->
-  <section id="graphs-section" class="max-w-5xl mx-auto px-4 sm:px-6 pb-20 space-y-6">
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-      <div class="bg-white rounded-2xl p-5 border border-green-100 shadow-sm">
-        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Entries Added</span>
-        <div id="statEntries" class="text-3xl font-extrabold text-gray-900 mt-2">0</div>
+  <!-- Emission Analytics Section -->
+  <section id="analytics" class="max-w-5xl mx-auto px-4 sm:px-6 pb-16 space-y-6">
+    <div class="text-center">
+      <h2 class="text-3xl font-extrabold text-gray-900">Emission Analytics</h2>
+      <p class="text-sm sm:text-base text-gray-500 mt-1.5">Comprehensive breakdown of your carbon footprint</p>
+    </div>
+
+    <!-- Top 3 KPI Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm relative">
+        <i data-lucide="activity" class="w-4 h-4 text-gray-400 absolute top-6 right-6"></i>
+        <span class="text-sm font-semibold text-gray-700">Total Emissions</span>
+        <div id="kpiTotalEmissions" class="text-3xl font-extrabold text-gray-900 mt-3">0.0 tCO₂e</div>
+        <p class="text-xs text-gray-500 mt-1.5">All time cumulative</p>
       </div>
-      <div class="bg-white rounded-2xl p-5 border border-green-100 shadow-sm">
-        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Total Emissions</span>
-        <div id="statTotalEmissions" class="text-3xl font-extrabold text-green-600 mt-2">0.00 tCO₂e</div>
+
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm relative">
+        <i data-lucide="activity" class="w-4 h-4 text-gray-400 absolute top-6 right-6"></i>
+        <span class="text-sm font-semibold text-gray-700">Latest Month</span>
+        <div id="kpiLatestMonth" class="text-3xl font-extrabold text-gray-900 mt-3">0.0 tCO₂e</div>
+        <p id="kpiLatestMonthLabel" class="text-xs text-gray-500 mt-1.5">No data entered yet</p>
       </div>
-      <div class="bg-white rounded-2xl p-5 border border-green-100 shadow-sm">
-        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Fuel Used in Vehicle</span>
-        <div id="statFuelTotal" class="text-3xl font-extrabold text-gray-900 mt-2">0 L</div>
+
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm relative">
+        <i id="kpiTrendIcon" data-lucide="trending-down" class="w-4 h-4 text-gray-400 absolute top-6 right-6"></i>
+        <span class="text-sm font-semibold text-gray-700">Monthly Trend</span>
+        <div id="kpiMonthlyTrend" class="text-3xl font-extrabold text-gray-400 mt-3">0.0%</div>
+        <p class="text-xs text-gray-500 mt-1.5">vs previous month</p>
       </div>
     </div>
 
-    <!-- Empty State shown before user enters/uploads data -->
-    <div id="emptyStateBox" class="bg-white rounded-2xl p-10 border border-green-100 shadow-sm text-center">
-      <div class="w-12 h-12 rounded-full bg-green-50 text-green-600 flex items-center justify-center mx-auto mb-3">
-        <i data-lucide="bar-chart-2" class="w-6 h-6"></i>
+    <!-- Current Emission Breakdown Donut Chart -->
+    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-green-100/80 shadow-sm">
+      <h3 class="text-lg font-bold text-gray-900">Current Emission Breakdown</h3>
+      <p class="text-xs text-gray-500 mt-0.5">Latest month distribution by source</p>
+      <div id="emptyBreakdown" class="mt-6 h-64 flex flex-col items-center justify-center text-center border border-dashed border-gray-200 rounded-xl bg-gray-50/50 px-4">
+        <i data-lucide="pie-chart" class="w-8 h-8 text-gray-300 mb-2"></i>
+        <p class="text-sm font-medium text-gray-500">No emission data yet</p>
+        <p class="text-xs text-gray-400 mt-0.5">Enter your data or upload a CSV file above to generate your breakdown chart</p>
       </div>
-      <h3 class="text-lg font-bold text-gray-900">No Data Entered Yet</h3>
-      <p class="text-sm text-gray-500 mt-1 max-w-md mx-auto">
-        Add your first entry manually above or upload a CSV file to generate clean graphs of your data.
-      </p>
-    </div>
-
-    <!-- Clean Graphs Grid (Only displays user data) -->
-    <div id="chartsWrapper" class="hidden grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="bg-white rounded-2xl p-6 border border-green-100 shadow-sm">
-        <h3 class="text-base font-bold text-gray-900">Emissions by Source (tCO₂e)</h3>
-        <p class="text-xs text-gray-500 mt-0.5">Total emissions from your entered/uploaded data</p>
-        <div class="mt-5 h-64">
-          <canvas id="sourceChart"></canvas>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl p-6 border border-green-100 shadow-sm">
-        <h3 class="text-base font-bold text-gray-900">Monthly Emissions Trend (tCO₂e)</h3>
-        <p class="text-xs text-gray-500 mt-0.5">Emissions across each date/month you entered</p>
-        <div class="mt-5 h-64">
-          <canvas id="trendChart"></canvas>
-        </div>
+      <div id="wrapBreakdown" class="hidden mt-6 h-64 max-w-md mx-auto">
+        <canvas id="breakdownChart"></canvas>
       </div>
     </div>
 
-    <!-- Entered Records Table -->
-    <div id="recordsTableWrapper" class="hidden bg-white rounded-2xl p-6 border border-green-100 shadow-sm overflow-x-auto">
-      <h3 class="text-base font-bold text-gray-900 mb-4">Your Entered Data</h3>
-      <table class="w-full text-left border-collapse text-sm">
-        <thead>
-          <tr class="border-b border-gray-200 text-xs uppercase text-gray-500">
-            <th class="py-2.5 pr-4">Date</th>
-            <th class="py-2.5 px-4">Electricity (kWh)</th>
-            <th class="py-2.5 px-4">Fuel Used in Vehicle (L)</th>
-            <th class="py-2.5 px-4">Gas (m³)</th>
-            <th class="py-2.5 px-4">Fleet (km)</th>
-            <th class="py-2.5 pl-4 text-right">Total (tCO₂e)</th>
-          </tr>
-        </thead>
-        <tbody id="recordsTableBody" class="divide-y divide-gray-100"></tbody>
-      </table>
+    <!-- Emission Trends (Last 12 Months) Line Chart -->
+    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-green-100/80 shadow-sm">
+      <h3 class="text-lg font-bold text-gray-900">Emission Trends (Last 12 Months)</h3>
+      <p class="text-xs text-gray-500 mt-0.5">Monthly emissions over time</p>
+      <div id="emptyTrends" class="mt-6 h-64 flex flex-col items-center justify-center text-center border border-dashed border-gray-200 rounded-xl bg-gray-50/50 px-4">
+        <i data-lucide="line-chart" class="w-8 h-8 text-gray-300 mb-2"></i>
+        <p class="text-sm font-medium text-gray-500">No trend history yet</p>
+        <p class="text-xs text-gray-400 mt-0.5">Your monthly emission curve will appear here once you add records</p>
+      </div>
+      <div id="wrapTrends" class="hidden mt-6 h-64">
+        <canvas id="trendsChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Emissions by Source Stacked Bar Chart -->
+    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-green-100/80 shadow-sm">
+      <h3 class="text-lg font-bold text-gray-900">Emissions by Source</h3>
+      <p class="text-xs text-gray-500 mt-0.5">Breakdown across all categories</p>
+      <div id="emptySourceBar" class="mt-6 h-72 flex flex-col items-center justify-center text-center border border-dashed border-gray-200 rounded-xl bg-gray-50/50 px-4">
+        <i data-lucide="bar-chart-3" class="w-8 h-8 text-gray-300 mb-2"></i>
+        <p class="text-sm font-medium text-gray-500">No category data yet</p>
+        <p class="text-xs text-gray-400 mt-0.5">Compare Electricity, Fuel Used in Vehicle, Gas, and Fleet emissions once entered</p>
+      </div>
+      <div id="wrapSourceBar" class="hidden mt-6 h-72">
+        <canvas id="sourceBarChart"></canvas>
+      </div>
     </div>
   </section>
 
-  <footer class="bg-white border-t border-gray-200/80 py-8 px-4 sm:px-6 text-center text-xs text-gray-500">
-    EcoTrack — Fresh session for every user. Your data stays in your current browser view until cleared or refreshed.
+  <!-- AI-Powered Forecast Section -->
+  <section id="forecast" class="max-w-5xl mx-auto px-4 sm:px-6 pb-16 space-y-6">
+    <div class="text-center">
+      <h2 class="text-3xl font-extrabold text-gray-900">AI-Powered Forecast</h2>
+      <p class="text-sm sm:text-base text-gray-500 mt-1.5">Predict future emissions and explore reduction scenarios</p>
+    </div>
+
+    <!-- Emission Forecast Chart Card -->
+    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-green-100/80 shadow-sm">
+      <h3 class="text-lg font-bold text-gray-900">Emission Forecast</h3>
+      <p class="text-xs text-gray-500 mt-0.5">Baseline prediction vs. optimized scenario with confidence intervals</p>
+      <div id="emptyForecast" class="mt-6 h-64 flex flex-col items-center justify-center text-center border border-dashed border-gray-200 rounded-xl bg-gray-50/50 px-4">
+        <i data-lucide="sparkles" class="w-8 h-8 text-gray-300 mb-2"></i>
+        <p class="text-sm font-medium text-gray-500">Forecast waiting for your baseline data</p>
+        <p class="text-xs text-gray-400 mt-0.5">Add at least one month of data to unlock AI projections</p>
+      </div>
+      <div id="wrapForecast" class="hidden mt-6 h-64">
+        <canvas id="forecastChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Scenario Settings + Projected Savings -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 bg-white rounded-2xl p-6 sm:p-8 border border-green-100/80 shadow-sm">
+        <div class="flex items-center gap-2">
+          <i data-lucide="calendar" class="w-5 h-5 text-green-600"></i>
+          <h3 class="text-lg font-bold text-gray-900">Scenario Settings</h3>
+        </div>
+        <p class="text-xs text-gray-500 mt-0.5">Adjust parameters to see impact</p>
+
+        <div class="mt-6 space-y-5">
+          <div>
+            <div class="flex justify-between text-sm font-semibold text-gray-800 mb-2">
+              <span>Forecast Period: <span id="valPeriod">12</span> months</span>
+            </div>
+            <input type="range" id="sliderPeriod" min="3" max="24" value="12" class="w-full">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-semibold text-gray-800 mb-2">
+              <span>Renewable Energy: <span id="valRenewable">20</span>%</span>
+            </div>
+            <input type="range" id="sliderRenewable" min="0" max="100" value="20" class="w-full">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-semibold text-gray-800 mb-2">
+              <span>Vehicle Fuel Reduction: <span id="valFuel">10</span>%</span>
+            </div>
+            <input type="range" id="sliderFuel" min="0" max="100" value="10" class="w-full">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-semibold text-gray-800 mb-2">
+              <span>Fleet Optimization: <span id="valFleet">5</span>%</span>
+            </div>
+            <input type="range" id="sliderFleet" min="0" max="100" value="5" class="w-full">
+          </div>
+        </div>
+      </div>
+
+      <!-- Projected Savings Card -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-green-100/80 shadow-sm flex flex-col justify-center">
+        <h3 class="text-lg font-bold text-gray-900">Projected Savings</h3>
+        <p class="text-xs text-gray-500 mt-0.5">Over <span id="savingsMonthsText">12</span> months</p>
+        <div id="projectedSavingsValue" class="text-4xl font-extrabold text-green-600 my-4">0.0 tCO₂e</div>
+        <p class="text-xs text-gray-500 leading-relaxed">Potential reduction with optimized scenario</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI-Powered Recommendations Section -->
+  <section id="recommendations" class="max-w-5xl mx-auto px-4 sm:px-6 pb-20 space-y-6">
+    <div class="text-center">
+      <h2 class="text-3xl font-extrabold text-gray-900">AI-Powered Recommendations</h2>
+      <p class="text-sm sm:text-base text-gray-500 mt-1.5">Actionable insights to reduce your carbon footprint</p>
+    </div>
+
+    <!-- Total Potential Reduction Banner Card -->
+    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-green-100/80 shadow-sm relative">
+      <i data-lucide="trending-down" class="w-5 h-5 text-green-600 absolute top-6 right-6"></i>
+      <h3 class="text-lg font-bold text-gray-900">Total Potential Reduction</h3>
+      <p class="text-xs text-gray-500 mt-0.5">If all recommendations are implemented</p>
+      <div id="totalPotentialReduction" class="text-3xl sm:text-4xl font-extrabold text-green-600 mt-4">0.0 tCO₂e/year</div>
+      <p class="text-xs text-gray-500 mt-1.5">Estimated annual savings across 6 recommendations</p>
+    </div>
+
+    <!-- 6 Recommendation Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Card 1 -->
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-green-50 text-green-600 flex items-center justify-center shrink-0">
+              <i data-lucide="zap" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900">Switch to Renewable Energy</h4>
+              <div class="flex items-center gap-2 mt-1.5">
+                <span class="bg-red-100 text-red-700 text-[11px] font-bold px-2.5 py-0.5 rounded-full">High Priority</span>
+                <span class="bg-gray-100 text-gray-700 text-[11px] font-medium px-2.5 py-0.5 rounded-full">Energy</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-gray-600 mt-4 leading-relaxed">
+            Install solar panels or purchase renewable energy certificates to offset grid power emissions. Consider a mix of on-site solar and grid renewable energy.
+          </p>
+        </div>
+        <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-medium">Potential<br>Savings</span>
+          <span id="recSaving1" class="text-base font-bold text-green-600">0.0 tCO₂e/year</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-green-50 text-green-600 flex items-center justify-center shrink-0">
+              <i data-lucide="settings" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900">Implement Real-Time Monitoring System</h4>
+              <div class="flex items-center gap-2 mt-1.5">
+                <span class="bg-red-100 text-red-700 text-[11px] font-bold px-2.5 py-0.5 rounded-full">High Priority</span>
+                <span class="bg-gray-100 text-gray-700 text-[11px] font-medium px-2.5 py-0.5 rounded-full">Efficiency</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-gray-600 mt-4 leading-relaxed">
+            Install IoT sensors and automated monitoring systems to track energy consumption in real-time, enabling quick identification and resolution of inefficiencies.
+          </p>
+        </div>
+        <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-medium">Potential<br>Savings</span>
+          <span id="recSaving2" class="text-base font-bold text-green-600">0.0 tCO₂e/year</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-green-50 text-green-600 flex items-center justify-center shrink-0">
+              <i data-lucide="fuel" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900">Optimize Vehicle Fuel &amp; Electrification</h4>
+              <div class="flex items-center gap-2 mt-1.5">
+                <span class="bg-red-100 text-red-700 text-[11px] font-bold px-2.5 py-0.5 rounded-full">High Priority</span>
+                <span class="bg-gray-100 text-gray-700 text-[11px] font-medium px-2.5 py-0.5 rounded-full">Vehicle Fuel</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-gray-600 mt-4 leading-relaxed">
+            Transition conventional fuel vehicles to electric or hybrid alternatives where possible. Implement scheduled maintenance and eco-driving habits to cut fuel consumption.
+          </p>
+        </div>
+        <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-medium">Potential<br>Savings</span>
+          <span id="recSaving3" class="text-base font-bold text-green-600">0.0 tCO₂e/year</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-green-50 text-green-600 flex items-center justify-center shrink-0">
+              <i data-lucide="sliders" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900">Energy Efficiency Upgrades</h4>
+              <div class="flex items-center gap-2 mt-1.5">
+                <span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Medium Priority</span>
+                <span class="bg-gray-100 text-gray-700 text-[11px] font-medium px-2.5 py-0.5 rounded-full">Efficiency</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-gray-600 mt-4 leading-relaxed">
+            Conduct an energy audit to identify inefficiencies. Upgrade to LED lighting, high-efficiency HVAC systems, improve insulation, and replace outdated equipment with energy-efficient models.
+          </p>
+        </div>
+        <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-medium">Potential<br>Savings</span>
+          <span id="recSaving4" class="text-base font-bold text-green-600">0.0 tCO₂e/year</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-green-50 text-green-600 flex items-center justify-center shrink-0">
+              <i data-lucide="truck" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900">Fleet Route Optimization &amp; Telematics</h4>
+              <div class="flex items-center gap-2 mt-1.5">
+                <span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Medium Priority</span>
+                <span class="bg-gray-100 text-gray-700 text-[11px] font-medium px-2.5 py-0.5 rounded-full">Fleet</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-gray-600 mt-4 leading-relaxed">
+            Implement GPS-based route optimization, driver training programs, and telematics to monitor fuel consumption. Consider transitioning to electric or hybrid vehicles for short-distance routes.
+          </p>
+        </div>
+        <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-medium">Potential<br>Savings</span>
+          <span id="recSaving5" class="text-base font-bold text-green-600">0.0 tCO₂e/year</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="bg-white rounded-2xl p-6 border border-green-100/80 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-green-50 text-green-600 flex items-center justify-center shrink-0">
+              <i data-lucide="sprout" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900">Carbon Offset Programs</h4>
+              <div class="flex items-center gap-2 mt-1.5">
+                <span class="bg-gray-100 text-gray-700 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Low Priority</span>
+                <span class="bg-gray-100 text-gray-700 text-[11px] font-medium px-2.5 py-0.5 rounded-full">Efficiency</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-gray-600 mt-4 leading-relaxed">
+            While reducing emissions should be the priority, consider investing in verified carbon offset projects for remaining emissions. Focus on nature-based solutions like reforestation or renewable energy projects in developing regions.
+          </p>
+        </div>
+        <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-medium">Potential<br>Savings</span>
+          <span id="recSaving6" class="text-base font-bold text-green-600">0.0 tCO₂e/year</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Implementation Notes Card -->
+    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-green-100/80 shadow-sm space-y-3 text-sm text-gray-600 leading-relaxed">
+      <h3 class="text-lg font-bold text-gray-900">Implementation Notes</h3>
+      <p><strong class="text-gray-900">High Priority:</strong> These recommendations offer the greatest potential impact and should be implemented first. They typically have shorter payback periods and significant emission reductions.</p>
+      <p><strong class="text-gray-900">Medium Priority:</strong> Valuable improvements that complement high-priority actions. Consider implementing these as part of a phased approach.</p>
+      <p><strong class="text-gray-900">Low Priority:</strong> Long-term strategies or supplementary measures to achieve net-zero goals once major emission sources are addressed.</p>
+      <p class="pt-1 text-xs text-gray-500"><strong class="text-gray-700">Next Steps:</strong> Replace coarse emission factors with official local/regional values, add automated data ingestion, improve forecasting models with additional covariates, and integrate with reporting standards (GHG Protocol, CDP).</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200/80 py-12 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center">
+            <i data-lucide="leaf" class="w-4 h-4"></i>
+          </div>
+          <span class="text-lg font-bold text-gray-900">EcoTrack</span>
+        </div>
+        <p class="text-xs text-gray-500 leading-relaxed">
+          AI-powered carbon emission management for a sustainable future.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-sm text-gray-900 mb-3">Product</h4>
+        <ul class="space-y-2 text-xs text-gray-500">
+          <li><a href="#data-entry" class="hover:text-green-600">Features</a></li>
+          <li><a href="#forecast" class="hover:text-green-600">Forecasting</a></li>
+          <li><a href="#recommendations" class="hover:text-green-600">Documentation</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-sm text-gray-900 mb-3">Company</h4>
+        <ul class="space-y-2 text-xs text-gray-500">
+          <li><a href="#" class="hover:text-green-600">About</a></li>
+          <li><a href="#" class="hover:text-green-600">Blog</a></li>
+          <li><a href="#" class="hover:text-green-600">Careers</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-sm text-gray-900 mb-3">Resources</h4>
+        <ul class="space-y-2 text-xs text-gray-500">
+          <li><a href="#" class="hover:text-green-600">Help Center</a></li>
+          <li><a href="#" class="hover:text-green-600">API Reference</a></li>
+          <li><a href="#" class="hover:text-green-600">Community</a></li>
+        </ul>
+      </div>
+    </div>
   </footer>
 
   <script>
     lucide.createIcons();
 
+    const STORAGE_KEY = 'ecotrack_personal_records_v1';
+
+    // Standard emission factors (tCO2e per unit)
     const FACTORS = {
       electricity: 0.0005, // tCO2e per kWh
       fuel: 0.00268,       // tCO2e per liter of vehicle fuel
@@ -231,256 +635,524 @@
       fleet: 0.0002        // tCO2e per km
     };
 
-    // Always starts empty for a new user
-    let userEntries = [];
-
-    // Default month input to current month
-    const now = new Date();
-    document.getElementById('entryDate').value =
-      `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-
-    // Tab switching
-    const tabManual = document.getElementById('tabManual');
-    const tabCsv = document.getElementById('tabCsv');
-    const manualForm = document.getElementById('manualForm');
-    const csvPanel = document.getElementById('csvPanel');
-
-    tabManual.addEventListener('click', () => {
-      tabManual.className = 'px-4 py-2 rounded-lg text-sm font-semibold bg-white text-green-700 shadow-sm transition';
-      tabCsv.className = 'px-4 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 transition';
-      manualForm.classList.remove('hidden');
-      csvPanel.classList.add('hidden');
-    });
-
-    tabCsv.addEventListener('click', () => {
-      tabCsv.className = 'px-4 py-2 rounded-lg text-sm font-semibold bg-white text-green-700 shadow-sm transition';
-      tabManual.className = 'px-4 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 transition';
-      csvPanel.classList.remove('hidden');
-      manualForm.classList.add('hidden');
-    });
-
-    function showBanner(msg, isError = false) {
-      const banner = document.getElementById('statusBanner');
-      banner.textContent = msg;
-      banner.className = isError
-        ? 'mt-4 text-sm font-medium px-4 py-2.5 rounded-xl bg-red-50 text-red-700 border border-red-200 block'
-        : 'mt-4 text-sm font-medium px-4 py-2.5 rounded-xl bg-green-50 text-green-800 border border-green-200 block';
+    // Load permanent personal records from this device's localStorage (empty for a new user)
+    let records = [];
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) records = parsed;
+      }
+    } catch (err) {
+      records = [];
     }
 
-    function computeEmissionTons(entry) {
-      return +(
-        entry.electricity * FACTORS.electricity +
-        entry.fuel * FACTORS.fuel +
-        entry.gas * FACTORS.gas +
-        entry.fleet * FACTORS.fleet
-      ).toFixed(3);
+    function saveRecordsToDevice() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+      } catch (err) {
+        console.error('Storage failed:', err);
+      }
     }
 
-    // Initialize clean charts
-    const sourceChart = new Chart(document.getElementById('sourceChart'), {
-      type: 'bar',
+    function formatMonthLabels(ym) {
+      const [year, month] = ym.split('-');
+      const dateObj = new Date(parseInt(year, 10), parseInt(month, 10) - 1, 1);
+      const shortMonth = dateObj.toLocaleString('en-US', { month: 'short' });
+      const longMonth = dateObj.toLocaleString('en-US', { month: 'long' });
+      return {
+        label: `${shortMonth} ${year.slice(2)}`,
+        fullLabel: `${longMonth} ${year}`
+      };
+    }
+
+    function recordTotal(r) {
+      return +(r.electricity + r.fuel + r.gas + r.fleet).toFixed(2);
+    }
+
+    // Initialize Charts (all start completely blank)
+    const breakdownChart = new Chart(document.getElementById('breakdownChart'), {
+      type: 'doughnut',
       data: {
-        labels: ['Electricity', 'Fuel Used in Vehicle', 'Natural Gas', 'Fleet Distance'],
+        labels: ['Electricity', 'Fuel Used in Vehicle', 'Gas', 'Fleet'],
         datasets: [{
-          label: 'tCO₂e',
           data: [0, 0, 0, 0],
-          backgroundColor: ['#16a34a', '#0ea5e9', '#f59e0b', '#8b5cf6'],
-          borderRadius: 8
+          backgroundColor: ['#16a34a', '#22c55e', '#f59e0b', '#fb923c'],
+          borderWidth: 2,
+          borderColor: '#ffffff'
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: { y: { beginAtZero: true } },
-        plugins: { legend: { display: false } }
+        cutout: '0%',
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, padding: 16 } }
+        }
       }
     });
 
-    const trendChart = new Chart(document.getElementById('trendChart'), {
+    const trendsChart = new Chart(document.getElementById('trendsChart'), {
       type: 'line',
       data: {
         labels: [],
         datasets: [{
-          label: 'Total Emissions (tCO₂e)',
+          label: 'Total (tCO₂e)',
           data: [],
           borderColor: '#16a34a',
-          backgroundColor: 'rgba(22, 163, 74, 0.12)',
-          fill: true,
-          tension: 0.25,
+          backgroundColor: 'rgba(22, 163, 74, 0.1)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#ffffff',
+          pointBorderColor: '#16a34a',
+          pointBorderWidth: 2,
           pointRadius: 4,
-          pointBackgroundColor: '#16a34a'
+          tension: 0.25
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: { y: { beginAtZero: true } }
+        scales: {
+          y: { beginAtZero: true, grid: { borderDash: [3, 3] } },
+          x: { grid: { display: false } }
+        },
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true } }
+        }
       }
     });
 
-    function renderAll() {
-      userEntries.sort((a, b) => a.date.localeCompare(b.date));
+    const sourceBarChart = new Chart(document.getElementById('sourceBarChart'), {
+      type: 'bar',
+      data: {
+        labels: [],
+        datasets: [
+          { label: 'Electricity', data: [], backgroundColor: '#16a34a' },
+          { label: 'Fuel Used in Vehicle', data: [], backgroundColor: '#22c55e' },
+          { label: 'Gas', data: [], backgroundColor: '#f59e0b' },
+          { label: 'Fleet', data: [], backgroundColor: '#fb923c' }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { stacked: true, grid: { display: false } },
+          y: { stacked: true, beginAtZero: true, grid: { borderDash: [3, 3] } }
+        },
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true } }
+        }
+      }
+    });
 
-      const count = userEntries.length;
-      const totalFuelLiters = userEntries.reduce((sum, r) => sum + r.fuel, 0);
-      const totalTons = userEntries.reduce((sum, r) => sum + computeEmissionTons(r), 0);
+    const forecastChart = new Chart(document.getElementById('forecastChart'), {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Confidence Interval',
+            data: [],
+            borderColor: 'transparent',
+            backgroundColor: 'rgba(22, 163, 74, 0.12)',
+            fill: '+2',
+            pointRadius: 0
+          },
+          {
+            label: 'Baseline Forecast',
+            data: [],
+            borderColor: '#f59e0b',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.2
+          },
+          {
+            label: 'Optimized Scenario',
+            data: [],
+            borderColor: '#16a34a',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, grid: { borderDash: [3, 3] } },
+          x: { grid: { display: false } }
+        },
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true } }
+        }
+      }
+    });
 
-      document.getElementById('statEntries').textContent = count;
-      document.getElementById('statTotalEmissions').textContent = `${totalTons.toFixed(2)} tCO₂e`;
-      document.getElementById('statFuelTotal').textContent = `${totalFuelLiters.toLocaleString()} L`;
+    function toggleEmptyStates(hasData) {
+      const pairs = [
+        ['emptyBreakdown', 'wrapBreakdown'],
+        ['emptyTrends', 'wrapTrends'],
+        ['emptySourceBar', 'wrapSourceBar'],
+        ['emptyForecast', 'wrapForecast']
+      ];
+      pairs.forEach(([emptyId, chartId]) => {
+        document.getElementById(emptyId).classList.toggle('hidden', hasData);
+        document.getElementById(chartId).classList.toggle('hidden', !hasData);
+      });
+    }
 
-      const emptyBox = document.getElementById('emptyStateBox');
-      const chartsWrapper = document.getElementById('chartsWrapper');
-      const tableWrapper = document.getElementById('recordsTableWrapper');
+    function renderSavedRecordsTable() {
+      const container = document.getElementById('savedRecordsContainer');
+      const tbody = document.getElementById('savedRecordsBody');
+      const countEl = document.getElementById('recordCountLabel');
 
-      if (count === 0) {
-        emptyBox.classList.remove('hidden');
-        chartsWrapper.classList.add('hidden');
-        chartsWrapper.classList.remove('grid');
-        tableWrapper.classList.add('hidden');
+      if (records.length === 0) {
+        container.classList.add('hidden');
+        tbody.innerHTML = '';
         return;
       }
 
-      emptyBox.classList.add('hidden');
-      chartsWrapper.classList.remove('hidden');
-      chartsWrapper.classList.add('grid');
-      tableWrapper.classList.remove('hidden');
+      container.classList.remove('hidden');
+      countEl.textContent = records.length;
 
-      const sumElecTons = userEntries.reduce((s, r) => s + r.electricity * FACTORS.electricity, 0);
-      const sumFuelTons = userEntries.reduce((s, r) => s + r.fuel * FACTORS.fuel, 0);
-      const sumGasTons = userEntries.reduce((s, r) => s + r.gas * FACTORS.gas, 0);
-      const sumFleetTons = userEntries.reduce((s, r) => s + r.fleet * FACTORS.fleet, 0);
-
-      sourceChart.data.datasets[0].data = [
-        +sumElecTons.toFixed(3),
-        +sumFuelTons.toFixed(3),
-        +sumGasTons.toFixed(3),
-        +sumFleetTons.toFixed(3)
-      ];
-      sourceChart.update();
-
-      trendChart.data.labels = userEntries.map(r => r.date);
-      trendChart.data.datasets[0].data = userEntries.map(r => computeEmissionTons(r));
-      trendChart.update();
-
-      const tbody = document.getElementById('recordsTableBody');
-      tbody.innerHTML = userEntries.map(r => `
-        <tr>
-          <td class="py-2.5 pr-4 font-medium text-gray-900">${r.date}</td>
-          <td class="py-2.5 px-4 text-gray-700">${r.electricity}</td>
-          <td class="py-2.5 px-4 text-gray-700">${r.fuel}</td>
-          <td class="py-2.5 px-4 text-gray-700">${r.gas}</td>
-          <td class="py-2.5 px-4 text-gray-700">${r.fleet}</td>
-          <td class="py-2.5 pl-4 text-right font-semibold text-green-700">${computeEmissionTons(r).toFixed(3)}</td>
+      tbody.innerHTML = records.slice().reverse().map(r => `
+        <tr class="hover:bg-gray-50/70">
+          <td class="py-2.5 px-3 font-semibold text-gray-900">${r.fullLabel}</td>
+          <td class="py-2.5 px-3">${r.rawElec || 0} kWh</td>
+          <td class="py-2.5 px-3">${r.rawFuel || 0} L</td>
+          <td class="py-2.5 px-3">${r.rawGas || 0} m³</td>
+          <td class="py-2.5 px-3">${r.rawFleet || 0} km</td>
+          <td class="py-2.5 px-3 font-bold text-green-700">${recordTotal(r).toFixed(2)}</td>
+          <td class="py-2.5 px-3 text-right">
+            <button type="button" onclick="deleteRecord('${r.ym}')" class="text-red-600 hover:text-red-800 font-medium">Delete</button>
+          </td>
         </tr>
       `).join('');
     }
 
-    function upsertEntry(newItem) {
-      const idx = userEntries.findIndex(r => r.date === newItem.date);
-      if (idx >= 0) {
-        userEntries[idx] = {
-          date: newItem.date,
-          electricity: userEntries[idx].electricity + newItem.electricity,
-          fuel: userEntries[idx].fuel + newItem.fuel,
-          gas: userEntries[idx].gas + newItem.gas,
-          fleet: userEntries[idx].fleet + newItem.fleet
-        };
-      } else {
-        userEntries.push(newItem);
-      }
-    }
+    window.deleteRecord = function(ym) {
+      records = records.filter(r => r.ym !== ym);
+      saveRecordsToDevice();
+      refreshDashboard();
+    };
 
-    // Manual form submission (at least one field required)
-    manualForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const date = document.getElementById('entryDate').value;
-      const rawElec = document.getElementById('electricityInput').value.trim();
-      const rawFuel = document.getElementById('fuelInput').value.trim();
-      const rawGas = document.getElementById('gasInput').value.trim();
-      const rawFleet = document.getElementById('fleetInput').value.trim();
+    function refreshDashboard() {
+      records.sort((a, b) => a.ym.localeCompare(b.ym));
+      renderSavedRecordsTable();
 
-      if (!rawElec && !rawFuel && !rawGas && !rawFleet) {
-        showBanner('Please enter at least one field (Electricity, Fuel Used in Vehicle, Natural Gas, or Fleet Distance).', true);
+      const hasData = records.length > 0;
+      toggleEmptyStates(hasData);
+
+      if (!hasData) {
+        document.getElementById('kpiTotalEmissions').textContent = '0.0 tCO₂e';
+        document.getElementById('kpiLatestMonth').textContent = '0.0 tCO₂e';
+        document.getElementById('kpiLatestMonthLabel').textContent = 'No data entered yet';
+
+        const trendEl = document.getElementById('kpiMonthlyTrend');
+        trendEl.textContent = '0.0%';
+        trendEl.className = 'text-3xl font-extrabold text-gray-400 mt-3';
+
+        ['recSaving1', 'recSaving2', 'recSaving3', 'recSaving4', 'recSaving5', 'recSaving6', 'totalPotentialReduction']
+          .forEach(id => document.getElementById(id).textContent = '0.0 tCO₂e/year');
+
+        document.getElementById('projectedSavingsValue').textContent = '0.0 tCO₂e';
         return;
       }
 
-      upsertEntry({
-        date,
-        electricity: parseFloat(rawElec) || 0,
-        fuel: parseFloat(rawFuel) || 0,
-        gas: parseFloat(rawGas) || 0,
-        fleet: parseFloat(rawFleet) || 0
-      });
+      const latest = records[records.length - 1];
+      const latestTotal = recordTotal(latest);
+      const cumulativeTotal = records.reduce((acc, r) => acc + recordTotal(r), 0);
 
-      renderAll();
-      showBanner(`Added data for ${date}. Graphs updated with your entry.`);
+      document.getElementById('kpiTotalEmissions').textContent = `${cumulativeTotal.toFixed(1)} tCO₂e`;
+      document.getElementById('kpiLatestMonth').textContent = `${latestTotal.toFixed(1)} tCO₂e`;
+      document.getElementById('kpiLatestMonthLabel').textContent = latest.fullLabel;
 
-      document.getElementById('electricityInput').value = '';
-      document.getElementById('fuelInput').value = '';
-      document.getElementById('gasInput').value = '';
-      document.getElementById('fleetInput').value = '';
-    });
+      const trendEl = document.getElementById('kpiMonthlyTrend');
+      if (records.length > 1) {
+        const prevTotal = recordTotal(records[records.length - 2]);
+        const trendPct = prevTotal > 0 ? ((latestTotal - prevTotal) / prevTotal) * 100 : 0;
+        trendEl.textContent = `${trendPct >= 0 ? '+' : ''}${trendPct.toFixed(1)}%`;
+        trendEl.className = `text-3xl font-extrabold mt-3 ${trendPct <= 0 ? 'text-green-600' : 'text-red-600'}`;
+      } else {
+        trendEl.textContent = '—';
+        trendEl.className = 'text-3xl font-extrabold text-gray-500 mt-3';
+      }
 
-    // CSV file upload handler
-    document.getElementById('csvFileInput').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      document.getElementById('csvFileName').textContent = file.name;
+      // Update Breakdown Donut
+      breakdownChart.data.datasets[0].data = [latest.electricity, latest.fuel, latest.gas, latest.fleet];
+      breakdownChart.update();
 
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const lines = event.target.result.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-        if (lines.length < 2) {
-          showBanner('CSV file must contain a header row and at least one data row.', true);
-          return;
-        }
+      // Update Trends & Stacked Bar Charts (last 12 records)
+      const recent = records.slice(-12);
+      trendsChart.data.labels = recent.map(r => r.label);
+      trendsChart.data.datasets[0].data = recent.map(r => recordTotal(r));
+      trendsChart.update();
 
-        const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-        const dateIdx = headers.findIndex(h => h === 'date' || h === 'month');
-        const elecIdx = headers.findIndex(h => h.includes('elec'));
-        const fuelIdx = headers.findIndex(h => h.includes('fuel') || h.includes('diesel'));
-        const gasIdx = headers.findIndex(h => h.includes('gas'));
-        const fleetIdx = headers.findIndex(h => h.includes('fleet') || h.includes('km'));
+      sourceBarChart.data.labels = recent.map(r => r.label);
+      sourceBarChart.data.datasets[0].data = recent.map(r => r.electricity);
+      sourceBarChart.data.datasets[1].data = recent.map(r => r.fuel);
+      sourceBarChart.data.datasets[2].data = recent.map(r => r.gas);
+      sourceBarChart.data.datasets[3].data = recent.map(r => r.fleet);
+      sourceBarChart.update();
 
-        let importedCount = 0;
-        for (let i = 1; i < lines.length; i++) {
-          const cols = lines[i].split(',').map(c => c.trim());
-          const dateVal = dateIdx >= 0 && cols[dateIdx] ? cols[dateIdx].slice(0, 7) : '';
-          if (!dateVal) continue;
+      // Update Recommendations dynamically based on user's annual scale
+      const annualElec = latest.electricity * 12;
+      const annualFuel = latest.fuel * 12;
+      const annualFleet = latest.fleet * 12;
+      const annualTotal = latestTotal * 12;
 
-          const elecVal = elecIdx >= 0 ? parseFloat(cols[elecIdx]) || 0 : 0;
-          const fuelVal = fuelIdx >= 0 ? parseFloat(cols[fuelIdx]) || 0 : 0;
-          const gasVal = gasIdx >= 0 ? parseFloat(cols[gasIdx]) || 0 : 0;
-          const fleetVal = fleetIdx >= 0 ? parseFloat(cols[fleetIdx]) || 0 : 0;
+      const r1 = +(annualElec * 0.271).toFixed(1);
+      const r2 = +(annualTotal * 0.0457).toFixed(1);
+      const r3 = +(annualFuel * 0.243).toFixed(1);
+      const r4 = +(annualElec * 0.0854).toFixed(1);
+      const r5 = +(annualFleet * 0.182).toFixed(1);
+      const r6 = +(annualTotal * 0.0914).toFixed(1);
+      const totalRec = +(r1 + r2 + r3 + r4 + r5 + r6).toFixed(1);
 
-          upsertEntry({
-            date: dateVal,
-            electricity: elecVal,
-            fuel: fuelVal,
-            gas: gasVal,
-            fleet: fleetVal
-          });
-          importedCount++;
-        }
+      document.getElementById('recSaving1').textContent = `${r1} tCO₂e/year`;
+      document.getElementById('recSaving2').textContent = `${r2} tCO₂e/year`;
+      document.getElementById('recSaving3').textContent = `${r3} tCO₂e/year`;
+      document.getElementById('recSaving4').textContent = `${r4} tCO₂e/year`;
+      document.getElementById('recSaving5').textContent = `${r5} tCO₂e/year`;
+      document.getElementById('recSaving6').textContent = `${r6} tCO₂e/year`;
+      document.getElementById('totalPotentialReduction').textContent = `${totalRec} tCO₂e/year`;
 
-        if (importedCount === 0) {
-          showBanner('No valid rows found in CSV. Make sure a "date" column is present.', true);
-          return;
-        }
+      updateForecast();
+    }
 
-        renderAll();
-        showBanner(`Imported ${importedCount} row(s) from ${file.name}.`);
+    function updateForecast() {
+      const periods = parseInt(document.getElementById('sliderPeriod').value, 10);
+      const renPct = parseInt(document.getElementById('sliderRenewable').value, 10) / 100;
+      const fuelPct = parseInt(document.getElementById('sliderFuel').value, 10) / 100;
+      const fleetPct = parseInt(document.getElementById('sliderFleet').value, 10) / 100;
+
+      document.getElementById('valPeriod').textContent = periods;
+      document.getElementById('valRenewable').textContent = Math.round(renPct * 100);
+      document.getElementById('valFuel').textContent = Math.round(fuelPct * 100);
+      document.getElementById('valFleet').textContent = Math.round(fleetPct * 100);
+      document.getElementById('savingsMonthsText').textContent = periods;
+
+      if (records.length === 0) {
+        document.getElementById('projectedSavingsValue').textContent = '0.0 tCO₂e';
+        return;
+      }
+
+      const latest = records[records.length - 1];
+      const baseMonthly = recordTotal(latest);
+      const [startYear, startMonth] = latest.ym.split('-').map(Number);
+
+      const labels = [];
+      const baselineArr = [];
+      const optimizedArr = [];
+      const upperBandArr = [];
+      let totalSavings = 0;
+
+      for (let i = 1; i <= periods; i++) {
+        const d = new Date(startYear, startMonth - 1 + i, 1);
+        labels.push(`${d.toLocaleString('en-US', { month: 'short' })} ${String(d.getFullYear()).slice(2)}`);
+
+        const growth = 1 + (i * 0.015);
+        const baselineVal = baseMonthly * growth;
+
+        const savedThisMonth =
+          (latest.electricity * growth * renPct * 0.72) +
+          (latest.fuel * growth * fuelPct * 0.85) +
+          (latest.fleet * growth * fleetPct * 0.80);
+
+        const optimizedVal = Math.max(0, baselineVal - savedThisMonth);
+        totalSavings += savedThisMonth;
+
+        baselineArr.push(+baselineVal.toFixed(1));
+        optimizedArr.push(+optimizedVal.toFixed(1));
+        upperBandArr.push(+(baselineVal * 1.06).toFixed(1));
+      }
+
+      document.getElementById('projectedSavingsValue').textContent = `${totalSavings.toFixed(1)} tCO₂e`;
+
+      forecastChart.data.labels = labels;
+      forecastChart.data.datasets[0].data = upperBandArr;
+      forecastChart.data.datasets[1].data = baselineArr;
+      forecastChart.data.datasets[2].data = optimizedArr;
+      forecastChart.update();
+    }
+
+    function showFeedback(msg, isError = false) {
+      const feedback = document.getElementById('formFeedback');
+      feedback.textContent = msg;
+      feedback.className = isError
+        ? 'mt-5 text-sm font-medium px-4 py-2.5 rounded-xl bg-red-50 text-red-700 border border-red-200 block'
+        : 'mt-5 text-sm font-medium px-4 py-2.5 rounded-xl bg-green-50 text-green-800 border border-green-200 block';
+    }
+
+    function upsertRecord(ym, rawElec, rawFuel, rawGas, rawFleet) {
+      const { label, fullLabel } = formatMonthLabels(ym);
+      const entry = {
+        ym,
+        label,
+        fullLabel,
+        rawElec,
+        rawFuel,
+        rawGas,
+        rawFleet,
+        electricity: +(rawElec * FACTORS.electricity).toFixed(2),
+        fuel: +(rawFuel * FACTORS.fuel).toFixed(2),
+        gas: +(rawGas * FACTORS.gas).toFixed(2),
+        fleet: +(rawFleet * FACTORS.fleet).toFixed(2)
       };
-      reader.readAsText(file);
+
+      const existingIdx = records.findIndex(r => r.ym === ym);
+      if (existingIdx >= 0) {
+        records[existingIdx] = entry;
+      } else {
+        records.push(entry);
+      }
+      return entry;
+    }
+
+    // Tab switching
+    const tabManualBtn = document.getElementById('tabManualBtn');
+    const tabCsvBtn = document.getElementById('tabCsvBtn');
+    const manualPane = document.getElementById('manualPane');
+    const csvPane = document.getElementById('csvPane');
+
+    tabManualBtn.addEventListener('click', () => {
+      manualPane.classList.remove('hidden');
+      csvPane.classList.add('hidden');
+      tabManualBtn.className = 'px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-green-700 shadow-sm transition flex items-center gap-1.5';
+      tabCsvBtn.className = 'px-3.5 py-2 rounded-lg text-xs font-semibold text-gray-600 hover:text-gray-900 transition flex items-center gap-1.5';
     });
 
-    // Sample CSV download
-    document.getElementById('downloadSampleCsv').addEventListener('click', () => {
+    tabCsvBtn.addEventListener('click', () => {
+      csvPane.classList.remove('hidden');
+      manualPane.classList.add('hidden');
+      tabCsvBtn.className = 'px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-green-700 shadow-sm transition flex items-center gap-1.5';
+      tabManualBtn.className = 'px-3.5 py-2 rounded-lg text-xs font-semibold text-gray-600 hover:text-gray-900 transition flex items-center gap-1.5';
+    });
+
+    // Manual Form Submit Handler
+    document.getElementById('manualEntryForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const ym = document.getElementById('entryDate').value;
+      const rawElecStr = document.getElementById('electricityInput').value.trim();
+      const rawFuelStr = document.getElementById('fuelInput').value.trim();
+      const rawGasStr = document.getElementById('gasInput').value.trim();
+      const rawFleetStr = document.getElementById('fleetInput').value.trim();
+
+      if (!rawElecStr && !rawFuelStr && !rawGasStr && !rawFleetStr) {
+        showFeedback('Please enter at least one value (Electricity, Fuel Used in Vehicle, Gas, or Fleet).', true);
+        return;
+      }
+
+      const entry = upsertRecord(
+        ym,
+        parseFloat(rawElecStr) || 0,
+        parseFloat(rawFuelStr) || 0,
+        parseFloat(rawGasStr) || 0,
+        parseFloat(rawFleetStr) || 0
+      );
+
+      saveRecordsToDevice();
+      refreshDashboard();
+      showFeedback(`Saved ${entry.fullLabel} (${recordTotal(entry)} tCO₂e) permanently to this device.`);
+    });
+
+    // CSV File Parsing & Upload
+    function processCsvText(csvText) {
+      const lines = csvText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+      if (lines.length < 2) {
+        showFeedback('CSV file must have a header row and at least one data row.', true);
+        return;
+      }
+
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      const dateIdx = headers.findIndex(h => h === 'date' || h === 'month');
+      const elecIdx = headers.findIndex(h => h.includes('elec'));
+      const fuelIdx = headers.findIndex(h => h.includes('fuel') || h.includes('diesel'));
+      const gasIdx = headers.findIndex(h => h.includes('gas'));
+      const fleetIdx = headers.findIndex(h => h.includes('fleet') || h.includes('km'));
+
+      if (dateIdx === -1) {
+        showFeedback('CSV file must include a "date" column (e.g., 2026-10 or 2026-10-01).', true);
+        return;
+      }
+
+      let importedCount = 0;
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(',').map(c => c.trim());
+        const rawDate = cols[dateIdx] || '';
+        const ymMatch = rawDate.match(/^(\d{4}-\d{2})/);
+        if (!ymMatch) continue;
+
+        const ym = ymMatch[1];
+        const eVal = elecIdx >= 0 ? (parseFloat(cols[elecIdx]) || 0) : 0;
+        const fVal = fuelIdx >= 0 ? (parseFloat(cols[fuelIdx]) || 0) : 0;
+        const gVal = gasIdx >= 0 ? (parseFloat(cols[gasIdx]) || 0) : 0;
+        const flVal = fleetIdx >= 0 ? (parseFloat(cols[fleetIdx]) || 0) : 0;
+
+        if (eVal === 0 && fVal === 0 && gVal === 0 && flVal === 0) continue;
+
+        upsertRecord(ym, eVal, fVal, gVal, flVal);
+        importedCount++;
+      }
+
+      if (importedCount === 0) {
+        showFeedback('No valid data rows were found in the CSV file.', true);
+        return;
+      }
+
+      saveRecordsToDevice();
+      refreshDashboard();
+      showFeedback(`Imported ${importedCount} month(s) from CSV and saved permanently on this device.`);
+    }
+
+    const csvDropzone = document.getElementById('csvDropzone');
+    const csvFileInput = document.getElementById('csvFileInput');
+
+    csvDropzone.addEventListener('click', (e) => {
+      if (e.target.id === 'downloadSampleCsvBtn') return;
+      csvFileInput.click();
+    });
+
+    csvDropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      csvDropzone.classList.add('border-green-600', 'bg-green-100/50');
+    });
+
+    csvDropzone.addEventListener('dragleave', () => {
+      csvDropzone.classList.remove('border-green-600', 'bg-green-100/50');
+    });
+
+    csvDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      csvDropzone.classList.remove('border-green-600', 'bg-green-100/50');
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = ev => processCsvText(ev.target.result);
+        reader.readAsText(file);
+      }
+    });
+
+    csvFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = ev => processCsvText(ev.target.result);
+        reader.readAsText(file);
+        csvFileInput.value = '';
+      }
+    });
+
+    // Download Sample CSV
+    document.getElementById('downloadSampleCsvBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
       const sample = [
-        'date,electricity_kwh,fuel_used_liters,gas_m3,fleet_km',
-        '2026-09,15000,420,120,1800',
-        '2026-10,16500,390,110,2100'
+        'date,electricity_kwh,fuel_liters,gas_m3,fleet_km',
+        '2026-09,14500,420,310,2800',
+        '2026-10,13800,390,295,2650',
+        '2026-11,13200,360,280,2500'
       ].join('\n');
       const blob = new Blob([sample], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
@@ -491,16 +1163,26 @@
       URL.revokeObjectURL(url);
     });
 
-    // Clear all data button
-    document.getElementById('clearAllBtn').addEventListener('click', () => {
-      userEntries = [];
-      document.getElementById('csvFileInput').value = '';
-      document.getElementById('csvFileName').textContent = 'No CSV file selected yet';
-      document.getElementById('statusBanner').classList.add('hidden');
-      renderAll();
+    // Clear All Personal Data from Device
+    document.getElementById('clearAllDataBtn').addEventListener('click', () => {
+      if (records.length === 0) return;
+      if (confirm('Clear all your saved emission data from this device?')) {
+        records = [];
+        localStorage.removeItem(STORAGE_KEY);
+        document.getElementById('manualEntryForm').reset();
+        document.getElementById('entryDate').value = '2026-11';
+        document.getElementById('formFeedback').classList.add('hidden');
+        refreshDashboard();
+      }
     });
 
-    renderAll();
+    // Attach slider listeners
+    ['sliderPeriod', 'sliderRenewable', 'sliderFuel', 'sliderFleet'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateForecast);
+    });
+
+    // Initial render (loads saved device records if present, otherwise clean blank state)
+    refreshDashboard();
   </script>
 </body>
 </html>
