@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoTrack - Carbon Emission Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f6fbf8;
+      color: #111827;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-green-100 selection:text-green-900">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-green-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-green-100 text-green-600 flex items-center justify-center">
+          <i data-lucide="leaf" class="w-5 h-5"></i>
+        </div>
+        <span class="text-xl font-bold tracking-tight text-gray-900">EcoTrack</span>
+      </a>
+      <a href="#data-section" class="bg-green-600 hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition shadow-sm">
+        Add Data
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-12 pb-10 px-4 sm:px-6 text-center max-w-4xl mx-auto">
+    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 leading-tight">
+      Carbon <span class="text-green-600">Emission</span> Tracker
+    </h1>
+    <p class="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+      Enter your data manually or upload a CSV file to view clean carbon emission charts for your entries.
+    </p>
+  </section>
+
+  <!-- Data Input Section: Manual Entry + CSV Upload -->
+  <section id="data-section" class="max-w-4xl mx-auto px-4 sm:px-6 pb-12">
+    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-green-100 shadow-sm">
+
+      <!-- Mode Switcher Tabs -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-gray-100">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900">Add Emission Data</h2>
+          <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Choose manual entry (any one or more fields) or upload a CSV file</p>
+        </div>
+        <div class="inline-flex rounded-xl bg-gray-100 p-1">
+          <button type="button" id="tabManual"
+            class="px-4 py-2 rounded-lg text-sm font-semibold bg-white text-green-700 shadow-sm transition">
+            Manual Entry
+          </button>
+          <button type="button" id="tabCsv"
+            class="px-4 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 transition">
+            Upload CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Manual Form Panel -->
+      <form id="manualForm" class="mt-6 space-y-5">
+        <div>
+          <label for="entryDate" class="block text-sm font-semibold text-gray-700 mb-1.5">
+            Date / Month <span class="text-red-500">*</span>
+          </label>
+          <input type="month" id="entryDate" required
+            class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="electricityInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
+              Electricity (kWh)
+            </label>
+            <input type="number" id="electricityInput" step="any" min="0" placeholder="Enter kWh (optional if other filled)"
+              class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+          </div>
+
+          <div>
+            <label for="fuelInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
+              Fuel Used in Vehicle (Liters)
+            </label>
+            <input type="number" id="fuelInput" step="any" min="0" placeholder="Enter vehicle fuel in liters"
+              class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+          </div>
+
+          <div>
+            <label for="gasInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
+              Natural Gas (m³)
+            </label>
+            <input type="number" id="gasInput" step="any" min="0" placeholder="Enter gas in m³"
+              class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+          </div>
+
+          <div>
+            <label for="fleetInput" class="block text-sm font-semibold text-gray-700 mb-1.5">
+              Fleet Distance (km)
+            </label>
+            <input type="number" id="fleetInput" step="any" min="0" placeholder="Enter distance in km"
+              class="w-full rounded-xl border border-gray-200 bg-gray-50/60 px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition">
+          </div>
+        </div>
+
+        <p class="text-xs text-gray-500">
+          Tip: You can fill in <strong>any one</strong> field above or multiple fields together. Blank fields are treated as 0.
+        </p>
+
+        <div class="flex flex-wrap gap-3 pt-1">
+          <button type="submit"
+            class="flex-1 min-w-[200px] bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-5 rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Data &amp; Update Graph
+          </button>
+          <button type="button" id="clearAllBtn"
+            class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-xl text-sm transition">
+            Clear All Data
+          </button>
+        </div>
+      </form>
+
+      <!-- CSV Upload Panel -->
+      <div id="csvPanel" class="hidden mt-6 space-y-5">
+        <label for="csvFileInput"
+          class="border-2 border-dashed border-green-200 hover:border-green-500 bg-green-50/30 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition">
+          <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center mb-3">
+            <i data-lucide="upload-cloud" class="w-6 h-6"></i>
+          </div>
+          <span class="text-sm font-semibold text-gray-900">Click to select a CSV file</span>
+          <span class="text-xs text-gray-500 mt-1">Supported columns: <code class="font-mono">date</code>, <code class="font-mono">electricity_kwh</code>, <code class="font-mono">fuel_used_liters</code> (or <code class="font-mono">diesel_liters</code>), <code class="font-mono">gas_m3</code>, <code class="font-mono">fleet_km</code></span>
+          <input type="file" id="csvFileInput" accept=".csv,text/csv" class="hidden">
+        </label>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-gray-50 rounded-xl p-4 border border-gray-200/80">
+          <span id="csvFileName" class="text-xs text-gray-600 font-medium">No CSV file selected yet</span>
+          <button type="button" id="downloadSampleCsv"
+            class="text-xs font-semibold text-green-700 hover:text-green-800 underline">
+            Download Sample CSV Template
+          </button>
+        </div>
+      </div>
+
+      <!-- Status Message -->
+      <div id="statusBanner" class="hidden mt-4 text-sm font-medium px-4 py-2.5 rounded-xl"></div>
+    </div>
+  </section>
+
+  <!-- Summary Cards & Clean Graphs -->
+  <section id="graphs-section" class="max-w-5xl mx-auto px-4 sm:px-6 pb-20 space-y-6">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div class="bg-white rounded-2xl p-5 border border-green-100 shadow-sm">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Entries Added</span>
+        <div id="statEntries" class="text-3xl font-extrabold text-gray-900 mt-2">0</div>
+      </div>
+      <div class="bg-white rounded-2xl p-5 border border-green-100 shadow-sm">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Total Emissions</span>
+        <div id="statTotalEmissions" class="text-3xl font-extrabold text-green-600 mt-2">0.00 tCO₂e</div>
+      </div>
+      <div class="bg-white rounded-2xl p-5 border border-green-100 shadow-sm">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Fuel Used in Vehicle</span>
+        <div id="statFuelTotal" class="text-3xl font-extrabold text-gray-900 mt-2">0 L</div>
+      </div>
+    </div>
+
+    <!-- Empty State shown before user enters/uploads data -->
+    <div id="emptyStateBox" class="bg-white rounded-2xl p-10 border border-green-100 shadow-sm text-center">
+      <div class="w-12 h-12 rounded-full bg-green-50 text-green-600 flex items-center justify-center mx-auto mb-3">
+        <i data-lucide="bar-chart-2" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-lg font-bold text-gray-900">No Data Entered Yet</h3>
+      <p class="text-sm text-gray-500 mt-1 max-w-md mx-auto">
+        Add your first entry manually above or upload a CSV file to generate clean graphs of your data.
+      </p>
+    </div>
+
+    <!-- Clean Graphs Grid (Only displays user data) -->
+    <div id="chartsWrapper" class="hidden grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-2xl p-6 border border-green-100 shadow-sm">
+        <h3 class="text-base font-bold text-gray-900">Emissions by Source (tCO₂e)</h3>
+        <p class="text-xs text-gray-500 mt-0.5">Total emissions from your entered/uploaded data</p>
+        <div class="mt-5 h-64">
+          <canvas id="sourceChart"></canvas>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 border border-green-100 shadow-sm">
+        <h3 class="text-base font-bold text-gray-900">Monthly Emissions Trend (tCO₂e)</h3>
+        <p class="text-xs text-gray-500 mt-0.5">Emissions across each date/month you entered</p>
+        <div class="mt-5 h-64">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entered Records Table -->
+    <div id="recordsTableWrapper" class="hidden bg-white rounded-2xl p-6 border border-green-100 shadow-sm overflow-x-auto">
+      <h3 class="text-base font-bold text-gray-900 mb-4">Your Entered Data</h3>
+      <table class="w-full text-left border-collapse text-sm">
+        <thead>
+          <tr class="border-b border-gray-200 text-xs uppercase text-gray-500">
+            <th class="py-2.5 pr-4">Date</th>
+            <th class="py-2.5 px-4">Electricity (kWh)</th>
+            <th class="py-2.5 px-4">Fuel Used in Vehicle (L)</th>
+            <th class="py-2.5 px-4">Gas (m³)</th>
+            <th class="py-2.5 px-4">Fleet (km)</th>
+            <th class="py-2.5 pl-4 text-right">Total (tCO₂e)</th>
+          </tr>
+        </thead>
+        <tbody id="recordsTableBody" class="divide-y divide-gray-100"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="bg-white border-t border-gray-200/80 py-8 px-4 sm:px-6 text-center text-xs text-gray-500">
+    EcoTrack — Fresh session for every user. Your data stays in your current browser view until cleared or refreshed.
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    const FACTORS = {
+      electricity: 0.0005, // tCO2e per kWh
+      fuel: 0.00268,       // tCO2e per liter of vehicle fuel
+      gas: 0.0020,         // tCO2e per m3
+      fleet: 0.0002        // tCO2e per km
+    };
+
+    // Always starts empty for a new user
+    let userEntries = [];
+
+    // Default month input to current month
+    const now = new Date();
+    document.getElementById('entryDate').value =
+      `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
+    // Tab switching
+    const tabManual = document.getElementById('tabManual');
+    const tabCsv = document.getElementById('tabCsv');
+    const manualForm = document.getElementById('manualForm');
+    const csvPanel = document.getElementById('csvPanel');
+
+    tabManual.addEventListener('click', () => {
+      tabManual.className = 'px-4 py-2 rounded-lg text-sm font-semibold bg-white text-green-700 shadow-sm transition';
+      tabCsv.className = 'px-4 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 transition';
+      manualForm.classList.remove('hidden');
+      csvPanel.classList.add('hidden');
+    });
+
+    tabCsv.addEventListener('click', () => {
+      tabCsv.className = 'px-4 py-2 rounded-lg text-sm font-semibold bg-white text-green-700 shadow-sm transition';
+      tabManual.className = 'px-4 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 transition';
+      csvPanel.classList.remove('hidden');
+      manualForm.classList.add('hidden');
+    });
+
+    function showBanner(msg, isError = false) {
+      const banner = document.getElementById('statusBanner');
+      banner.textContent = msg;
+      banner.className = isError
+        ? 'mt-4 text-sm font-medium px-4 py-2.5 rounded-xl bg-red-50 text-red-700 border border-red-200 block'
+        : 'mt-4 text-sm font-medium px-4 py-2.5 rounded-xl bg-green-50 text-green-800 border border-green-200 block';
+    }
+
+    function computeEmissionTons(entry) {
+      return +(
+        entry.electricity * FACTORS.electricity +
+        entry.fuel * FACTORS.fuel +
+        entry.gas * FACTORS.gas +
+        entry.fleet * FACTORS.fleet
+      ).toFixed(3);
+    }
+
+    // Initialize clean charts
+    const sourceChart = new Chart(document.getElementById('sourceChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Electricity', 'Fuel Used in Vehicle', 'Natural Gas', 'Fleet Distance'],
+        datasets: [{
+          label: 'tCO₂e',
+          data: [0, 0, 0, 0],
+          backgroundColor: ['#16a34a', '#0ea5e9', '#f59e0b', '#8b5cf6'],
+          borderRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true } },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    const trendChart = new Chart(document.getElementById('trendChart'), {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Total Emissions (tCO₂e)',
+          data: [],
+          borderColor: '#16a34a',
+          backgroundColor: 'rgba(22, 163, 74, 0.12)',
+          fill: true,
+          tension: 0.25,
+          pointRadius: 4,
+          pointBackgroundColor: '#16a34a'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    function renderAll() {
+      userEntries.sort((a, b) => a.date.localeCompare(b.date));
+
+      const count = userEntries.length;
+      const totalFuelLiters = userEntries.reduce((sum, r) => sum + r.fuel, 0);
+      const totalTons = userEntries.reduce((sum, r) => sum + computeEmissionTons(r), 0);
+
+      document.getElementById('statEntries').textContent = count;
+      document.getElementById('statTotalEmissions').textContent = `${totalTons.toFixed(2)} tCO₂e`;
+      document.getElementById('statFuelTotal').textContent = `${totalFuelLiters.toLocaleString()} L`;
+
+      const emptyBox = document.getElementById('emptyStateBox');
+      const chartsWrapper = document.getElementById('chartsWrapper');
+      const tableWrapper = document.getElementById('recordsTableWrapper');
+
+      if (count === 0) {
+        emptyBox.classList.remove('hidden');
+        chartsWrapper.classList.add('hidden');
+        chartsWrapper.classList.remove('grid');
+        tableWrapper.classList.add('hidden');
+        return;
+      }
+
+      emptyBox.classList.add('hidden');
+      chartsWrapper.classList.remove('hidden');
+      chartsWrapper.classList.add('grid');
+      tableWrapper.classList.remove('hidden');
+
+      const sumElecTons = userEntries.reduce((s, r) => s + r.electricity * FACTORS.electricity, 0);
+      const sumFuelTons = userEntries.reduce((s, r) => s + r.fuel * FACTORS.fuel, 0);
+      const sumGasTons = userEntries.reduce((s, r) => s + r.gas * FACTORS.gas, 0);
+      const sumFleetTons = userEntries.reduce((s, r) => s + r.fleet * FACTORS.fleet, 0);
+
+      sourceChart.data.datasets[0].data = [
+        +sumElecTons.toFixed(3),
+        +sumFuelTons.toFixed(3),
+        +sumGasTons.toFixed(3),
+        +sumFleetTons.toFixed(3)
+      ];
+      sourceChart.update();
+
+      trendChart.data.labels = userEntries.map(r => r.date);
+      trendChart.data.datasets[0].data = userEntries.map(r => computeEmissionTons(r));
+      trendChart.update();
+
+      const tbody = document.getElementById('recordsTableBody');
+      tbody.innerHTML = userEntries.map(r => `
+        <tr>
+          <td class="py-2.5 pr-4 font-medium text-gray-900">${r.date}</td>
+          <td class="py-2.5 px-4 text-gray-700">${r.electricity}</td>
+          <td class="py-2.5 px-4 text-gray-700">${r.fuel}</td>
+          <td class="py-2.5 px-4 text-gray-700">${r.gas}</td>
+          <td class="py-2.5 px-4 text-gray-700">${r.fleet}</td>
+          <td class="py-2.5 pl-4 text-right font-semibold text-green-700">${computeEmissionTons(r).toFixed(3)}</td>
+        </tr>
+      `).join('');
+    }
+
+    function upsertEntry(newItem) {
+      const idx = userEntries.findIndex(r => r.date === newItem.date);
+      if (idx >= 0) {
+        userEntries[idx] = {
+          date: newItem.date,
+          electricity: userEntries[idx].electricity + newItem.electricity,
+          fuel: userEntries[idx].fuel + newItem.fuel,
+          gas: userEntries[idx].gas + newItem.gas,
+          fleet: userEntries[idx].fleet + newItem.fleet
+        };
+      } else {
+        userEntries.push(newItem);
+      }
+    }
+
+    // Manual form submission (at least one field required)
+    manualForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const date = document.getElementById('entryDate').value;
+      const rawElec = document.getElementById('electricityInput').value.trim();
+      const rawFuel = document.getElementById('fuelInput').value.trim();
+      const rawGas = document.getElementById('gasInput').value.trim();
+      const rawFleet = document.getElementById('fleetInput').value.trim();
+
+      if (!rawElec && !rawFuel && !rawGas && !rawFleet) {
+        showBanner('Please enter at least one field (Electricity, Fuel Used in Vehicle, Natural Gas, or Fleet Distance).', true);
+        return;
+      }
+
+      upsertEntry({
+        date,
+        electricity: parseFloat(rawElec) || 0,
+        fuel: parseFloat(rawFuel) || 0,
+        gas: parseFloat(rawGas) || 0,
+        fleet: parseFloat(rawFleet) || 0
+      });
+
+      renderAll();
+      showBanner(`Added data for ${date}. Graphs updated with your entry.`);
+
+      document.getElementById('electricityInput').value = '';
+      document.getElementById('fuelInput').value = '';
+      document.getElementById('gasInput').value = '';
+      document.getElementById('fleetInput').value = '';
+    });
+
+    // CSV file upload handler
+    document.getElementById('csvFileInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      document.getElementById('csvFileName').textContent = file.name;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const lines = event.target.result.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+        if (lines.length < 2) {
+          showBanner('CSV file must contain a header row and at least one data row.', true);
+          return;
+        }
+
+        const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+        const dateIdx = headers.findIndex(h => h === 'date' || h === 'month');
+        const elecIdx = headers.findIndex(h => h.includes('elec'));
+        const fuelIdx = headers.findIndex(h => h.includes('fuel') || h.includes('diesel'));
+        const gasIdx = headers.findIndex(h => h.includes('gas'));
+        const fleetIdx = headers.findIndex(h => h.includes('fleet') || h.includes('km'));
+
+        let importedCount = 0;
+        for (let i = 1; i < lines.length; i++) {
+          const cols = lines[i].split(',').map(c => c.trim());
+          const dateVal = dateIdx >= 0 && cols[dateIdx] ? cols[dateIdx].slice(0, 7) : '';
+          if (!dateVal) continue;
+
+          const elecVal = elecIdx >= 0 ? parseFloat(cols[elecIdx]) || 0 : 0;
+          const fuelVal = fuelIdx >= 0 ? parseFloat(cols[fuelIdx]) || 0 : 0;
+          const gasVal = gasIdx >= 0 ? parseFloat(cols[gasIdx]) || 0 : 0;
+          const fleetVal = fleetIdx >= 0 ? parseFloat(cols[fleetIdx]) || 0 : 0;
+
+          upsertEntry({
+            date: dateVal,
+            electricity: elecVal,
+            fuel: fuelVal,
+            gas: gasVal,
+            fleet: fleetVal
+          });
+          importedCount++;
+        }
+
+        if (importedCount === 0) {
+          showBanner('No valid rows found in CSV. Make sure a "date" column is present.', true);
+          return;
+        }
+
+        renderAll();
+        showBanner(`Imported ${importedCount} row(s) from ${file.name}.`);
+      };
+      reader.readAsText(file);
+    });
+
+    // Sample CSV download
+    document.getElementById('downloadSampleCsv').addEventListener('click', () => {
+      const sample = [
+        'date,electricity_kwh,fuel_used_liters,gas_m3,fleet_km',
+        '2026-09,15000,420,120,1800',
+        '2026-10,16500,390,110,2100'
+      ].join('\n');
+      const blob = new Blob([sample], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ecotrack_sample.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Clear all data button
+    document.getElementById('clearAllBtn').addEventListener('click', () => {
+      userEntries = [];
+      document.getElementById('csvFileInput').value = '';
+      document.getElementById('csvFileName').textContent = 'No CSV file selected yet';
+      document.getElementById('statusBanner').classList.add('hidden');
+      renderAll();
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>
